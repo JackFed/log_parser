@@ -73,26 +73,24 @@ def write_output(output_file, tag_counts, port_protocol_counts):
         print(f"An unexpected error occurred: {e}")  
 
 
-def main(input_file, lookup_file):
-    start_time = time.perf_counter()
+def main(input_file, lookup_file, output_file):
     print(f"Processing input file: {input_file} and lookup file: {lookup_file}")
+    lookup_start = time.perf_counter()
     lookup_table = read_lookup(lookup_file)
-    print("Successfully parsed lookup table")
-    
-    tag_counts, port_protocol = read_file_lines(input_file, lookup_table)
-    print("Successfully parsed input file")
+    print(f"Successfully parsed lookup table in: {(time.perf_counter() - lookup_start):.2f} seconds.")
 
-    write_output("output.csv", tag_counts, port_protocol)
-    end_time = time.perf_counter() - start_time
-    print(f"Successfully wrote to outputfile in: {end_time:.2f} seconds.")
+    input_start = time.perf_counter()
+    tag_counts, port_protocol = read_file_lines(input_file, lookup_table)
+    print(f"Successfully parsed input file in: {(time.perf_counter() - input_start):.2f} seconds.")
+
+    output_start = time.perf_counter()
+    write_output(output_file, tag_counts, port_protocol)
+    print(f"Successfully wrote to {output_file} in: {(time.perf_counter() - output_start):.2f} seconds.")
 
 
 if __name__ == "__main__":
-    if len(sys.argv) != 3:
-        print("Usage: python your_script.py <input_file> <lookup_file>")
-        sys.exit(1)  # Exit with an error code
+    if len(sys.argv) != 4:
+        print("Usage: python your_script.py <input_file> <lookup_file> <output_file>")
+        sys.exit(1)
 
-    input_file = sys.argv[1]
-    lookup_file = sys.argv[2]
-
-    main(input_file, lookup_file)
+    main(sys.argv[1], sys.argv[2], sys.argv[3]) # input_file, lookup_file, output_file
