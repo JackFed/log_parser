@@ -17,7 +17,7 @@ Write a program that can parse a file containing flow log data and maps each row
      ```
 
 3. **Output:**
-   - After the script runs successfully, check for a file named `output.csv` in the same directory. This file will contain the parsed log data, organized by tags and counts, as well as the port and protocol combinations.
+   - After the script runs successfully, check for a csv file with the specified name you gave in the same directory. This file will contain the parsed log data, organized by tags and counts, as well as the port and protocol combinations.
 
 ## Assumptions:
 - The input logs are in AWS VPC Flow Logs version 2 format.
